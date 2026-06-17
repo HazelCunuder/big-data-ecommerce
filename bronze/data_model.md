@@ -231,11 +231,11 @@ erDiagram
 
 ---
 
-## Prochaines étapes (mercredi — zone silver)
+## Prochaines étapes (zone silver)
 
-- [ ] Caster `review_score` en `integer`
-- [ ] Convertir `review_creation_date` et `review_answer_timestamp` en `timestamp`
-- [ ] Agréger `geolocation` par `zip_code_prefix` (moyenne lat/lng)
-- [ ] Vérifier les valeurs nulles dans toutes les tables et documenter les décisions de traitement
-- [ ] Détecter les doublons (`order_id`, `product_id`, etc.)
-- [ ] Exporter les tables nettoyées en Parquet dans `output/silver/`
+- Caster `review_score` en `integer`
+- Convertir `review_creation_date` et `review_answer_timestamp` en `timestamp`
+- Agréger `geolocation` par `zip_code_prefix`
+- Vérifier les valeurs nulles dans toutes les tables et documenter les décisions de traitement
+- Détecter les doublons (`order_id`, `product_id`, etc.)
+- Exporter les tables nettoyées en Parquet dans `output/silver/`
