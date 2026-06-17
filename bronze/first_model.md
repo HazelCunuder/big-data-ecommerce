@@ -74,8 +74,8 @@ La table centrale est **orders**, reliée à la majorité des autres tables via 
 | review_score | string | ⚠️ devrait être `integer` |
 | review_comment_title | string | beaucoup de NULL |
 | review_comment_message | string | beaucoup de NULL |
-| review_creation_date | string | ⚠️ devrait être `timestamp` |
-| review_answer_timestamp | string | ⚠️ devrait être `timestamp` |
+| review_creation_date | timestamp |
+| review_answer_timestamp | timestamp |
 
 ### products (32 951 lignes)
 
@@ -140,11 +140,10 @@ La table centrale est **orders**, reliée à la majorité des autres tables via 
 Ces points sont à traiter lors du passage bronze → silver (mercredi) :
 
 1. **`review_score`** inféré en `string` par Spark — doit être casté en `integer` pour permettre les agrégations (note moyenne, etc.).
-2. **`review_creation_date`** et **`review_answer_timestamp`** inférés en `string` — doivent être convertis en `timestamp` pour calculer des délais de réponse.
-3. **`geolocation`** contient de nombreux doublons pour un même `zip_code_prefix` (coordonnées légèrement différentes). Une agrégation (moyenne de lat/lng, ou première occurrence) est nécessaire avant toute jointure, sous peine de dupliquer les lignes de `customers` ou `sellers`.
-4. **Cohérence des types de zip code** entre `customers`, `sellers` et `geolocation` — tous en `integer` ici, mais à revérifier après nettoyage (un CEP commençant par 0 perdrait son zéro en integer).
-5. **Valeurs NULL** dans `review_comment_title` et `review_comment_message` — attendu, ce ne sont pas des champs obligatoires, mais à documenter dans le rapport qualité.
-6. **`product_category_name`** peut être NULL pour certains produits — à gérer (catégorie "non renseignée" plutôt que suppression de la ligne).
+2. **`geolocation`** contient de nombreux doublons pour un même `zip_code_prefix` (coordonnées légèrement différentes). Une agrégation (moyenne de lat/lng, ou première occurrence) est nécessaire avant toute jointure, sous peine de dupliquer les lignes de `customers` ou `sellers`.
+3. **Cohérence des types de zip code** entre `customers`, `sellers` et `geolocation` — tous en `integer` ici, mais à revérifier après nettoyage (un CEP commençant par 0 perdrait son zéro en integer).
+4. **Valeurs NULL** dans `review_comment_title` et `review_comment_message` — attendu, ce ne sont pas des champs obligatoires, mais à documenter dans le rapport qualité.
+5. **`product_category_name`** peut être NULL pour certains produits — à gérer (catégorie "non renseignée" plutôt que suppression de la ligne).
 
 ---
 
